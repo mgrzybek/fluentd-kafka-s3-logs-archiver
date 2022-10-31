@@ -1,5 +1,5 @@
 FROM fluent/fluentd:latest
-MAINTAINER Mathieu GRZYBEK
+LABEL org.opencontainers.image.authors="Mathieu GRZYBEK"
 
 USER root
 
