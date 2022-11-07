@@ -1,0 +1,44 @@
+include:
+  - local: "/.cloud-pi-native/docker.yml"
+  - local: "/.cloud-pi-native/vault.yml"
+
+default:
+  image: alpine:latest
+  #tags: []
+
+cache:
+  paths: []
+
+variables:
+  TAG: "${CI_COMMIT_REF_SLUG}"
+  DOCKERFILE: Dockerfile
+  PROJECT_NAME: fluentd-kafka-s3-logs-archiver
+  PROJECT_ORGANISATION: minjustice
+  PROJECT_PATH: "${PROJECT_ORGANISATION}-${PROJECT_NAME}"
+  REGISTRY_URL: "${QUAY_ROOT_URL}/${PROJECT_PATH}"
+
+stages:
+  - read-secret
+  - docker-test
+  - docker-build
+
+read_secret:
+  stage: read-secret
+  extends:
+    - .vault:read_secret
+
+docker-test:
+  variables:
+    WORKING_DIR: "."
+    IMAGE_NAME: fluentd-kafka-s3-logs-archiver
+  stage: docker-test
+  extends:
+    - .docker:test
+
+docker-build:
+  variables:
+    WORKING_DIR: "."
+    IMAGE_NAME: fluentd-kafka-s3-logs-archiver
+  stage: docker-build
+  extends:
+    - .docker:build
