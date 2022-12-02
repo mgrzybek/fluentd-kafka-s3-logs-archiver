@@ -1,4 +1,4 @@
-name: Docker
+name: Publish-Image-To-GHCR
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -6,8 +6,6 @@ name: Docker
 # documentation.
 
 on:
-  schedule:
-    - cron: '32 2 * * *'
   push:
     branches: [ "main" ]
     # Publish semver tags as releases.
